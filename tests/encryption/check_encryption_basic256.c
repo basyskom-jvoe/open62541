@@ -150,7 +150,7 @@ START_TEST(encryption_connect) {
     UA_ClientConfig *cc = UA_Client_getConfig(client);
     UA_ClientConfig_setDefaultEncryption(cc, certificate, privateKey,
                                          trustList, trustListSize,
-                                         revocationList, revocationListSize);
+                                         revocationList, revocationListSize, NULL, NULL);
     cc->securityPolicyUri =
         UA_STRING_ALLOC("http://opcfoundation.org/UA/SecurityPolicy#Basic256");
     ck_assert(client != NULL);
@@ -231,7 +231,8 @@ START_TEST(encryption_connect_pem) {
     UA_ClientConfig *cc = UA_Client_getConfig(client);
     UA_ClientConfig_setDefaultEncryption(cc, certificate, privateKey,
                                          trustList, trustListSize,
-                                         revocationList, revocationListSize);
+                                         revocationList, revocationListSize,
+                                         NULL, NULL);
     cc->securityPolicyUri =
         UA_STRING_ALLOC("http://opcfoundation.org/UA/SecurityPolicy#Basic256");
     ck_assert(client != NULL);
