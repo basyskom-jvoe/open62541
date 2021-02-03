@@ -962,6 +962,20 @@ UA_Server_setVariableNode_valueBackend(UA_Server *server,
                                        const UA_NodeId nodeId,
                                        const UA_ValueBackend valueBackend);
 
+/**
+ * Localized Attribute Source
+ * ^^^^^^^^^^^^^^^^^^^^^^^^^^
+ *
+ * The DisplayName and Description attributes of the Base node type are localized.
+ * A client can influence the localization of these values by passing an array of
+ * LocaleId values in the ActivateSession request.
+ *
+ * By attaching a LocalizedAttributeSource to a node, the value of the DisplayName
+ * and Description attributes can be determined using the two callback functions.
+ *
+ * Part 4, 5.6.3.2 of the OPC UA specification describes the expected handling of
+ * the requested locale IDs.
+ */
 UA_StatusCode UA_EXPORT UA_THREADSAFE
 UA_Server_setNode_localizedAttributeSource(UA_Server *server,
                                            const UA_NodeId nodeId,
