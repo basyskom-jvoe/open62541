@@ -80,7 +80,7 @@ addLocalizedAttributeSourceToTestVariable(void) {
     UA_LocalizedAttributeSource source;
     source.readDisplayName = readDisplayName;
     source.readDescription = readDescription;
-    UA_StatusCode retval = UA_Server_setNode_localizedAttributeSource(server, currentNodeId, source);
+    UA_StatusCode retval = UA_Server_setNodeLocalizedAttributeSource(server, currentNodeId, source);
     ck_assert_uint_eq(retval, UA_STATUSCODE_GOOD);
 }
 

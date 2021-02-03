@@ -2340,7 +2340,7 @@ setLocalizedAttributeSource(UA_Server *server, UA_Session *session,
 }
 
 UA_StatusCode
-UA_Server_setNode_localizedAttributeSource(UA_Server *server,
+UA_Server_setNodeLocalizedAttributeSource(UA_Server *server,
                                            const UA_NodeId nodeId,
                                            const UA_LocalizedAttributeSource localizedAttributeSource) {
     UA_LOCK_ASSERT(&server->serviceMutex, 1);

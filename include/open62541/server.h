@@ -977,7 +977,7 @@ UA_Server_setVariableNode_valueBackend(UA_Server *server,
  * the requested locale IDs.
  */
 UA_StatusCode UA_EXPORT UA_THREADSAFE
-UA_Server_setNode_localizedAttributeSource(UA_Server *server,
+UA_Server_setNodeLocalizedAttributeSource(UA_Server *server,
                                            const UA_NodeId nodeId,
                                            const UA_LocalizedAttributeSource localizedAttributeSource);
 
