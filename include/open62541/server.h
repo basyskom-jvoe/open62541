@@ -971,10 +971,14 @@ UA_Server_setVariableNode_valueBackend(UA_Server *server,
  * LocaleId values in the ActivateSession request.
  *
  * By attaching a LocalizedAttributeSource to a node, the value of the DisplayName
- * and Description attributes can be determined using the two callback functions.
+ * and Description attributes can be determined using the two read callback functions.
+ * Writes are also supported and must be handled using the two write callbacks.
+ * If a read callback but no write callback is specified for an attribute, the write
+ * is denied with UA_STATUSCODE_BADNOTWRITABLE.
  *
  * Part 4, 5.6.3.2 of the OPC UA specification describes the expected handling of
- * the requested locale IDs.
+ * the requested locale IDs for read operations, Part 4, 5.10.4.1 covers the handling
+ * of localed for write access.
  */
 UA_StatusCode UA_EXPORT UA_THREADSAFE
 UA_Server_setNodeLocalizedAttributeSource(UA_Server *server,

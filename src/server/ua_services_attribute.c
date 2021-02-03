@@ -1513,20 +1513,42 @@ copyAttributeIntoNode(UA_Server *server, UA_Session *session,
         retval = UA_STATUSCODE_BADWRITENOTSUPPORTED;
         break;
     case UA_ATTRIBUTEID_DISPLAYNAME:
-        if (node->head.localizedAttributeSource.readDisplayName)
-            retval = UA_STATUSCODE_BADNOTWRITABLE;
-
         CHECK_USERWRITEMASK(UA_WRITEMASK_DISPLAYNAME);
         CHECK_DATATYPE_SCALAR(LOCALIZEDTEXT);
+
+        if (node->head.localizedAttributeSource.readDisplayName) {
+            if (!node->head.localizedAttributeSource.writeDisplayName) {
+                retval = UA_STATUSCODE_BADNOTWRITABLE;
+            } else {
+                retval = node->head.localizedAttributeSource.writeDisplayName(server, &session->sessionId,
+                                                                              session->sessionHandle,
+                                                                              &node->head.nodeId,
+                                                                              node->head.context,
+                                                                              (const UA_LocalizedText *)value);
+            }
+            break;
+        }
+
         retval = updateLocalizedText((const UA_LocalizedText *)value,
                                      &node->head.displayName);
         break;
     case UA_ATTRIBUTEID_DESCRIPTION:
-        if (node->head.localizedAttributeSource.readDescription)
-            retval = UA_STATUSCODE_BADNOTWRITABLE;
-
         CHECK_USERWRITEMASK(UA_WRITEMASK_DESCRIPTION);
         CHECK_DATATYPE_SCALAR(LOCALIZEDTEXT);
+
+        if (node->head.localizedAttributeSource.readDisplayName) {
+            if (node->head.localizedAttributeSource.writeDisplayName) {
+                retval = UA_STATUSCODE_BADNOTWRITABLE;
+            } else {
+                retval = node->head.localizedAttributeSource.writeDescription(server, &session->sessionId,
+                                                                              session->sessionHandle,
+                                                                              &node->head.nodeId,
+                                                                              node->head.context,
+                                                                              (const UA_LocalizedText *)value);
+            }
+            break;
+        }
+
         retval = updateLocalizedText((const UA_LocalizedText *)value,
                                      &node->head.description);
         break;

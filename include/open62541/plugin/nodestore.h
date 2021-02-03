@@ -291,6 +291,19 @@ typedef struct {
                                      void *nodeContext, size_t localeIdsSize,
                                      const UA_LocaleId *localeIds, UA_LocalizedText *value);
 
+    /* Write the localized DisplayName attribute of a node
+     * @param server The server executing the callback
+     * @param sessionId The identifier of the session
+     * @param sessionContext Additional data attached to the session in the
+     *        access control layer
+     * @param nodeId The identifier of the node being written to
+     * @param nodeContext Additional data attached to the node by the user
+     * @param value The localized value for the DisplayName attribute
+     */
+    UA_StatusCode (*writeDisplayName)(UA_Server *server, const UA_NodeId *sessionId,
+                                      void *sessionContext, const UA_NodeId *nodeId,
+                                      void *nodeContext, const UA_LocalizedText *value);
+
     /* Read the localized Description attribute of a node
      * @param server The server executing the callback
      * @param sessionId The identifier of the session
@@ -306,6 +319,19 @@ typedef struct {
                                      void *sessionContext, const UA_NodeId *nodeId,
                                      void *nodeContext, size_t localeIdsSize,
                                      const UA_LocaleId *localeIds, UA_LocalizedText *value);
+
+    /* Write the localized Description attribute of a node
+     * @param server The server executing the callback
+     * @param sessionId The identifier of the session
+     * @param sessionContext Additional data attached to the session in the
+     *        access control layer
+     * @param nodeId The identifier of the node being written to
+     * @param nodeContext Additional data attached to the node by the user
+     * @param value The localized value for the DisplayName attribute
+     */
+    UA_StatusCode (*writeDescription)(UA_Server *server, const UA_NodeId *sessionId,
+                                      void *sessionContext, const UA_NodeId *nodeId,
+                                      void *nodeContext, const UA_LocalizedText *value);
 } UA_LocalizedAttributeSource;
 
 /* Every Node starts with these attributes */
