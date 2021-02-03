@@ -1662,6 +1662,17 @@ typedef struct {
 UA_ServerStatistics UA_EXPORT
 UA_Server_getStatistics(UA_Server *server);
 
+/**
+* Localization
+* ------------
+*
+* A client may pass an array of locale IDs in the ActivateSession request (Part 4, 5.6.3.2).
+* This information can be used to return localized text to the client depending on its preferred
+* language(s).
+*/
+UA_EXPORT const UA_LocaleId *
+UA_Server_getLocaleIdsForSession(UA_Server *server, const UA_NodeId *sessionId, size_t *localeIdsSize);
+
 _UA_END_DECLS
 
 #ifdef UA_ENABLE_PUBSUB
