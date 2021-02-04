@@ -132,7 +132,11 @@ addLocalizedAttributeSourceToTestVariable(void) {
 }
 
 THREAD_CALLBACK(serverloop) {
+#ifndef WIN32
     (void)_;
+#else
+    (void)lpParam;
+#endif
 
     while(running)
         UA_Server_run_iterate(server, true);
