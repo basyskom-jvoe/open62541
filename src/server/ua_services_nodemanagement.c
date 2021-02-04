@@ -2333,6 +2333,7 @@ UA_Server_setVariableNode_valueBackend(UA_Server *server, const UA_NodeId nodeId
 static UA_StatusCode
 setLocalizedAttributeSource(UA_Server *server, UA_Session *session,
                             UA_VariableNode *node, const UA_LocalizedAttributeSource *callback) {
+    UA_LOCK_ASSERT(&server->serviceMutex, 1);
     if(node->head.nodeClass != UA_NODECLASS_VARIABLE)
         return UA_STATUSCODE_BADNODECLASSINVALID;
     node->head.localizedAttributeSource = *callback;
@@ -2343,11 +2344,14 @@ UA_StatusCode
 UA_Server_setNodeLocalizedAttributeSource(UA_Server *server,
                                            const UA_NodeId nodeId,
                                            const UA_LocalizedAttributeSource localizedAttributeSource) {
-    UA_LOCK_ASSERT(&server->serviceMutex, 1);
-    return UA_Server_editNode(server, &server->adminSession, &nodeId,
-                              (UA_EditNodeCallback)setLocalizedAttributeSource,
-                              /* casting away const because callback casts it back anyway */
-                              (UA_LocalizedAttributeSource *) (uintptr_t)&localizedAttributeSource);
+    UA_LOCK(&server->serviceMutex);
+    UA_StatusCode retval = UA_Server_editNode(server, &server->adminSession, &nodeId,
+                                              (UA_EditNodeCallback)setLocalizedAttributeSource,
+                                              /* casting away const because callback casts it back anyway */
+                                              (UA_LocalizedAttributeSource *) (uintptr_t)&localizedAttributeSource);
+    UA_UNLOCK(&server->serviceMutex);
+
+    return retval;
 }
 
 /************************************/
